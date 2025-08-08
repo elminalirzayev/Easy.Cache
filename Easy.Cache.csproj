@@ -4,7 +4,7 @@
 		<OutputType>Library</OutputType>
 		<!--<TargetFramework>net8.0</TargetFramework>-->
 		<TargetFrameworks>net9.0;net8.0;net7.0;net6.0;net48;net47;netstandard2.1;</TargetFrameworks>
-		
+
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<LangVersion>10.0</LangVersion>
@@ -26,6 +26,13 @@
 
 	<ItemGroup>
 		<Folder Include="Extensions\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="README.md">
+			<Pack>true</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
 	</ItemGroup>
 
 	<ItemGroup>
