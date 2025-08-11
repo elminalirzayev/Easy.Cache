@@ -3,6 +3,8 @@
 [![Build & Nuget Publish](https://github.com/elminalirzayev/Easy.Cache/actions/workflows/nuget.yml/badge.svg)](https://github.com/elminalirzayev/Easy.Cache/actions/workflows/nuget.yml)
 [![Release](https://img.shields.io/github/v/release/elminalirzayev/Easy.Cache)](https://github.com/elminalirzayev/Easy.Cache/releases)
 [![License](https://img.shields.io/github/license/elminalirzayev/Easy.Cache)](https://github.com/elminalirzayev/Easy.Cache/blob/master/LICENSE.txt)
+[![NuGet](https://img.shields.io/nuget/v/Easy.Cache.svg)](https://www.nuget.org/packages/Easy.Cache)
+
 
 # Easy.Cache
 

@@ -14,7 +14,8 @@ namespace Easy.Cache.Providers
 
         public Task<T?> GetAsync<T>(string key)
         {
-            return Task.FromResult(_memoryCache.TryGetValue(key, out T value) ? value : default);
+            return Task.FromResult(_memoryCache.TryGetValue(key, out T? value) ? value : default(T?));
+
         }
 
         public Task SetAsync<T>(string key, T value, TimeSpan? absoluteExpiration = null, TimeSpan? slidingExpiration = null)

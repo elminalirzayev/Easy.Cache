@@ -28,7 +28,7 @@ public class RedisCacheProvider : ICacheProvider
         if (data.IsNullOrEmpty)
             return default;
 
-        return _serializer.Deserialize<T>(data);
+        return _serializer.Deserialize<T?>(data!)!;
     }
 
     public async Task RemoveAsync(string key)

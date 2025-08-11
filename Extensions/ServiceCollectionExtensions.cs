@@ -18,7 +18,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddEasyCacheRedis(this IServiceCollection services, string redisConnection)
     {
         services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(redisConnection));
-        services.AddSingleton<ISerializer, JsonCacheSerializer>(); 
+        services.AddSingleton<ISerializer, JsonCacheSerializer>();
         services.AddSingleton<ICacheProvider, RedisCacheProvider>();
         services.AddSingleton<CacheManager>();
         return services;

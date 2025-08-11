@@ -2,31 +2,50 @@
 
 	<PropertyGroup>
 		<OutputType>Library</OutputType>
-		<!--<TargetFramework>net8.0</TargetFramework>-->
+		<!--<TargetFrameworks>net47</TargetFrameworks>-->
 		<TargetFrameworks>net9.0;net8.0;net7.0;net6.0;net48;net47;netstandard2.1;</TargetFrameworks>
-
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<LangVersion>10.0</LangVersion>
-		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+
+		<!-- Deterministic + SourceLink -->
+		<Deterministic>true</Deterministic>
+		<DebugType>portable</DebugType>
+		<EmbedAllSources>true</EmbedAllSources>
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<EnableSourceLink>true</EnableSourceLink>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<IncludeSymbols>true</IncludeSymbols>
+		<IncludeSource>true</IncludeSource>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+
+		<!-- Package Info -->
 
 		<Title>Easy.Cache</Title>
+		<AssemblyTitle>Easy.Cache</AssemblyTitle>
+		<AssemblyName>Easy.Cache</AssemblyName>
 		<PackageId>Easy.Cache</PackageId>
-		<Version>1.0.0</Version>
+		<Version>1.0.1</Version>
 		<Authors>Elmin Alirzayev</Authors>
 		<Company>Easy Code Tools</Company>
+		<Copyright>Copyright © Elmin Alirzayev 2025</Copyright>
 		<Description>Easy.Cache is a lightweight, high-performance caching library for .NET that supports MemoryCache, Redis, and multi-layer caching with pluggable serialization.</Description>
 		<PackageTags>cache memorycache redis multilayer distributedcache dotnet caching serializer</PackageTags>
 		<RepositoryUrl>https://github.com/elminalirzayev/Easy.Cache</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageProjectUrl>https://github.com/elminalirzayev/Easy.Cache</PackageProjectUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageReleaseNotes>-</PackageReleaseNotes>
+
+		<!-- Build -->
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<!--<GenerateDocumentationFile>true</GenerateDocumentationFile>-->
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
+		<LangVersion>10.0</LangVersion>
 
 	</PropertyGroup>
-
-	<ItemGroup>
-		<Folder Include="Extensions\" />
-	</ItemGroup>
 
 	<ItemGroup>
 		<None Include="README.md">
