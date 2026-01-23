@@ -16,10 +16,16 @@ public class RedisCacheProvider : ICacheProvider
     {
         var serialized = _serializer.Serialize(value);
 
-        // Redis sliding expiration doğrudan desteklemez, o yüzden sadece absoluteExpiration kullanıyoruz.
         TimeSpan? expiry = absoluteExpiration ?? slidingExpiration;
+        if (expiry.HasValue)
+        {
+            await _db.StringSetAsync(key, serialized, (Expiration)expiry);
+        }
+        else
+        {
+            await _db.StringSetAsync(key, serialized);
+        }
 
-        await _db.StringSetAsync(key, serialized, expiry);
     }
 
     public async Task<T?> GetAsync<T>(string key)

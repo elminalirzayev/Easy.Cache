@@ -2,8 +2,7 @@
 
 	<PropertyGroup>
 		<OutputType>Library</OutputType>
-		<!--<TargetFrameworks>net47</TargetFrameworks>-->
-		<TargetFrameworks>net9.0;net8.0;net7.0;net6.0;net48;net47;netstandard2.1;</TargetFrameworks>
+		<TargetFrameworks>net10.0;net9.0;net8.0;net7.0;net6.0;netstandard2.0;netstandard2.1;net48;net47;</TargetFrameworks>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 
@@ -25,7 +24,7 @@
 		<AssemblyTitle>Easy.Cache</AssemblyTitle>
 		<AssemblyName>Easy.Cache</AssemblyName>
 		<PackageId>Easy.Cache</PackageId>
-		<Version>1.0.1</Version>
+		<Version>1.0.2</Version>
 		<Authors>Elmin Alirzayev</Authors>
 		<Company>Easy Code Tools</Company>
 		<Copyright>Copyright © Elmin Alirzayev 2025</Copyright>
@@ -55,9 +54,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="9.0.8" />
-		<PackageReference Include="StackExchange.Redis" Version="2.8.58" />
-		<PackageReference Include="System.Text.Json" Version="9.0.8" />
+		<PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="10.0.2" />
+		<PackageReference Include="StackExchange.Redis" Version="2.10.1" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net47' Or '$(TargetFramework)' == 'net48' Or '$(TargetFramework)' == 'netstandard2.0' Or '$(TargetFramework)' == 'netstandard2.1'">
+		<PackageReference Include="System.Text.Json" Version="10.0.2" />
 	</ItemGroup>
 
 </Project>
