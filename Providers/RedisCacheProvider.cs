@@ -1,44 +1,64 @@
 ﻿using Easy.Cache.Abstractions;
 using StackExchange.Redis;
 
-public class RedisCacheProvider : ICacheProvider
+namespace Easy.Cache.Providers
 {
-    private readonly IDatabase _db;
-    private readonly ISerializer _serializer;
-
-    public RedisCacheProvider(IConnectionMultiplexer redis, ISerializer serializer)
+    /// <summary>
+    /// Implementation of ICacheProvider using StackExchange.Redis.
+    /// </summary>
+    public class RedisCacheProvider : ICacheProvider
     {
-        _db = redis.GetDatabase();
-        _serializer = serializer;
-    }
+        private readonly IDatabase _db;
+        private readonly ISerializer _serializer;
 
-    public async Task SetAsync<T>(string key, T value, TimeSpan? absoluteExpiration = null, TimeSpan? slidingExpiration = null)
-    {
-        var serialized = _serializer.Serialize(value);
-
-        TimeSpan? expiry = absoluteExpiration ?? slidingExpiration;
-        if (expiry.HasValue)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RedisCacheProvider"/> class.
+        /// </summary>
+        /// <param name="redis">The Redis connection multiplexer.</param>
+        /// <param name="serializer">The serializer for object conversion.</param>
+        public RedisCacheProvider(IConnectionMultiplexer redis, ISerializer serializer)
         {
-            await _db.StringSetAsync(key, serialized, (Expiration)expiry);
-        }
-        else
-        {
-            await _db.StringSetAsync(key, serialized);
+            _db = redis.GetDatabase();
+            _serializer = serializer;
         }
 
-    }
+        /// <inheritdoc />
+        public async Task SetAsync<T>(string key, T value, TimeSpan? absoluteExpiration = null, TimeSpan? slidingExpiration = null, CancellationToken cancellationToken = default)
+        {
+            // Redis does not natively support Sliding Expiration in the same way MemoryCache does.
+            // We typically use Absolute Expiration (TTL) for Redis.
+            TimeSpan? expiry = absoluteExpiration ?? slidingExpiration;
 
-    public async Task<T?> GetAsync<T>(string key)
-    {
-        var data = await _db.StringGetAsync(key);
-        if (data.IsNullOrEmpty)
-            return default;
+            var serialized = _serializer.Serialize(value);
 
-        return _serializer.Deserialize<T?>(data!)!;
-    }
+            // Execute async operation without blocking
 
-    public async Task RemoveAsync(string key)
-    {
-        await _db.KeyDeleteAsync(key);
+            if (expiry.HasValue)
+            {
+                await _db.StringSetAsync(key, serialized, (Expiration)expiry).ConfigureAwait(false);
+
+            }
+            else
+            {
+                await _db.StringSetAsync(key, serialized).ConfigureAwait(false);
+            }
+        }
+
+        /// <inheritdoc />
+        public async Task<T?> GetAsync<T>(string key, CancellationToken cancellationToken = default)
+        {
+            var data = await _db.StringGetAsync(key).ConfigureAwait(false);
+
+            if (data.IsNullOrEmpty)
+                return default;
+
+            return _serializer.Deserialize<T>(data!);
+        }
+
+        /// <inheritdoc />
+        public async Task RemoveAsync(string key, CancellationToken cancellationToken = default)
+        {
+            await _db.KeyDeleteAsync(key).ConfigureAwait(false);
+        }
     }
 }

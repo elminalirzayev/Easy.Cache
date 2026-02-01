@@ -3,22 +3,31 @@ using Microsoft.Extensions.Caching.Memory;
 
 namespace Easy.Cache.Providers
 {
+    /// <summary>
+    /// Implementation of ICacheProvider using Microsoft.Extensions.Caching.Memory (In-Memory).
+    /// </summary>
     public class MemoryCacheProvider : ICacheProvider
     {
         private readonly IMemoryCache _memoryCache;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MemoryCacheProvider"/> class.
+        /// </summary>
+        /// <param name="memoryCache">The memory cache instance.</param>
         public MemoryCacheProvider(IMemoryCache memoryCache)
         {
             _memoryCache = memoryCache;
         }
 
-        public Task<T?> GetAsync<T>(string key)
+        /// <inheritdoc />
+        public Task<T?> GetAsync<T>(string key, CancellationToken cancellationToken = default)
         {
-            return Task.FromResult(_memoryCache.TryGetValue(key, out T? value) ? value : default(T?));
-
+            // MemoryCache is synchronous, so we wrap it in Task.FromResult
+            return Task.FromResult(_memoryCache.TryGetValue(key, out T? value) ? value : default);
         }
 
-        public Task SetAsync<T>(string key, T value, TimeSpan? absoluteExpiration = null, TimeSpan? slidingExpiration = null)
+        /// <inheritdoc />
+        public Task SetAsync<T>(string key, T value, TimeSpan? absoluteExpiration = null, TimeSpan? slidingExpiration = null, CancellationToken cancellationToken = default)
         {
             var options = new MemoryCacheEntryOptions();
 
@@ -33,7 +42,8 @@ namespace Easy.Cache.Providers
             return Task.CompletedTask;
         }
 
-        public Task RemoveAsync(string key)
+        /// <inheritdoc />
+        public Task RemoveAsync(string key, CancellationToken cancellationToken = default)
         {
             _memoryCache.Remove(key);
             return Task.CompletedTask;

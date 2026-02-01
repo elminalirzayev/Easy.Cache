@@ -2,9 +2,12 @@
 
 	<PropertyGroup>
 		<OutputType>Library</OutputType>
-		<TargetFrameworks>net10.0;net9.0;net8.0;net7.0;net6.0;netstandard2.0;netstandard2.1;net48;net47;</TargetFrameworks>
+		<TargetFrameworks>net10.0;net9.0;net8.0;net7.0;net6.0;netstandard2.0;netstandard2.1;net48;net47;net472;</TargetFrameworks>
+		
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
+		<LangVersion>latest</LangVersion>
+
 
 		<!-- Deterministic + SourceLink -->
 		<Deterministic>true</Deterministic>
@@ -24,7 +27,7 @@
 		<AssemblyTitle>Easy.Cache</AssemblyTitle>
 		<AssemblyName>Easy.Cache</AssemblyName>
 		<PackageId>Easy.Cache</PackageId>
-		<Version>1.0.3</Version>
+		<Version>1.0.4</Version>
 		<PackageIcon>icon.png</PackageIcon>
 		<Authors>Elmin Alirzayev</Authors>
 		<Company>Easy Code Tools</Company>
@@ -44,7 +47,6 @@
 		<NoWarn>$(NoWarn);1591</NoWarn>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 		<SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
-		<LangVersion>latest</LangVersion>
 
 	</PropertyGroup>
 
